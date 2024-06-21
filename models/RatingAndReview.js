@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const Course = require("./Course");
 
 // Define the RatingAndReview schema
 const ratingAndReviewsSchema = new mongoose.Schema({
