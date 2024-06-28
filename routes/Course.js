@@ -1,85 +1,85 @@
-// import the required modules
-const express = require("express");
+// Import the required modules
+const express = require("express")
 const router = express.Router()
 
-// Import the controller
+// Import the Controllers
 
-// course controllers import
+// Course Controllers Import
 const {
-    createCourse,
-    getAllCourse,
-    getCourseDetails,
-} = require("../controllers/Course");
+  createCourse,
+  getAllCourses,
+  getCourseDetails,
+} = require("../controllers/Course")
 
-// category controller import
+
+// Categories Controllers Import
 const {
-    showAllCategories,
-    createCategory,
-    createPageDetails,
-    categoryPageDetails,
+  showAllCategories,
+  createCategory,
+  categoryPageDetails,
 } = require("../controllers/Category")
 
-// section controller import
+// Sections Controllers Import
 const {
-    createSection,
-    updateSection,
-    deleteSection,
-} = require ("../controllers/Section")
+  createSection,
+  updateSection,
+  deleteSection,
+} = require("../controllers/Section")
 
-// subsection controller import
+// Sub-Sections Controllers Import
 const {
-    createSubSection,
-    updateSubSection,
-    deleteSubSection,
+  createSubSection,
+  updateSubSection,
+  deleteSubSection,
 } = require("../controllers/Subsection")
 
-// reting controllers import
+// Rating Controllers Import
 const {
-    createRating,
-    getAverageRating,
-    getAllRating,
+  createRating,
+  getAverageRating,
+  getAllRating,
 } = require("../controllers/RatingAndReview")
 
+// Importing Middlewares
+const { auth, isInstructor, isStudent, isAdmin } = require("../middlewares/auth")
 
-// importing Middlewares
-const {auth, isInstructor, isStudent, isAdmin} = require("../middlewares/auth");
+// ********************************************************************************************************
+//                                      Course routes
+// ********************************************************************************************************
 
-// **************************************************//
-//             Course Routes                         //
-//***************************************************//
-
-// course can only be created by Instructors
+// Courses can Only be Created by Instructors
 router.post("/createCourse", auth, isInstructor, createCourse)
-// Add a section to a course
+//Add a Section to a Course
 router.post("/addSection", auth, isInstructor, createSection)
-// update a section
+// Update a Section
 router.post("/updateSection", auth, isInstructor, updateSection)
-// Delete A section
+// Delete a Section
 router.post("/deleteSection", auth, isInstructor, deleteSection)
-// Edit sub section 
-router.post("/updateSubSection", auth, isInstructor, updateSubSection )
-// delete a sub Section
+// Edit Sub Section
+router.post("/updateSubSection", auth, isInstructor, updateSubSection)
+// Delete Sub Section
 router.post("/deleteSubSection", auth, isInstructor, deleteSubSection)
-// Add a sub section to a section
-router.post("?addSubSection", auth, isInstructor, createSubSection)
-// get all Registered courses
-router.post("/getAllCourse", getAllCourse)
-// get Details for a specific courses
+// Add a Sub Section to a Section
+router.post("/addSubSection", auth, isInstructor, createSubSection)
+// Get all Registered Courses
+router.get("/getAllCourses", getAllCourses)
+// Get Details for a Specific Courses
 router.post("/getCourseDetails", getCourseDetails)
 
-//**************************************************************************//
-//              Category routes (Only by Admin)                             //
-//**************************************************************************//
-// category can only be created by Admin
-// TODO : Put isAdmin Middleware here
-router.post("/createCategory", auth, isAdmin, createCategory )
-router.post("/showAllCategories", showAllCategories)
+// ********************************************************************************************************
+//                                      Category routes (Only by Admin)
+// ********************************************************************************************************
+// Category can Only be Created by Admin
+// TODO: Put IsAdmin Middleware here
+router.post("/createCategory", auth, isAdmin, createCategory)
+router.get("/showAllCategories", showAllCategories)
 router.post("/getCategoryPageDetails", categoryPageDetails)
-//*******************************************************************************//
-//            Rating And review                                                  //
-//*******************************************************************************//
+
+// ********************************************************************************************************
+//                                      Rating and Review
+// ********************************************************************************************************
 router.post("/createRating", auth, isStudent, createRating)
-router.post("/getAverageRating", getAverageRating)
-router.post("/getReviews", getAllRating)
+router.get("/getAverageRating", getAverageRating)
+router.get("/getReviews", getAllRating)
 
 module.exports = router
